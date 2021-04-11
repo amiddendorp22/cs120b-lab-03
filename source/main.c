@@ -14,107 +14,43 @@
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRA = 0x00; PORTA = 0xFF;
-    DDRC = 0xFF; PORTC = 0x00;
+    DDRB = 0xFE; PORTB = 0xFE; //configures all but the last bit as output.
+    DDRD = 0x00; PORTD = 0xFF;
     /* Insert your solution below */
-    unsigned char tmpA;
-    unsigned char tmpC;
-    unsigned char fastenSeatbelt;
+    unsigned char tmpD;
+    unsigned char tmpB;
+
     while (1) {
-	tmpA = PINA & 0x7F; //grabs all pins except PA7 from PINA
-	tmpA = tmpA << 4;
-	tmpA = tmpA >> 4;
-	fastenSeatbelt = PINA >> 4;
-	if(tmpA <= 0x04)
+	tmpD = PIND;
+	tmpB = PINB & 0x01; //grabs the last bit of PINB for input
+	
+	if(tmpD >= 0x46)
 	{
-		//tmpC = 0x40;
-		if(tmpA == 0x00)
-		{
-			//tmpC = 0x40;//just the 0x40
-			if(fastenSeatbelt == 0x03)
-			{
-				tmpC = 0xC0;
-			}
-			else
-			{
-				tmpC = 0x40;
-			}
-		}
-		else if(tmpA == 0x01 || tmpA == 0x02)
-		{
-			//tmpC = 0x60;
-			if(fastenSeatbelt == 0x03)
-                        {
-				tmpC = 0xE0;
-                        }
-			else
-			{
-				tmpC = 0x60;
-			}
-  
-		}
-		else if(tmpA == 0x03 || tmpA == 0x04)
-		{
-			//tmpC = 0x70;
-			if(fastenSeatbelt == 0x03)
-                        {
-				tmpC = 0xF0;
-                        }
-			else
-			{
-				tmpC = 0x70;
-			}
-		}
+		tmpB = 0x02;
 	}
-	if(tmpA == 0x05 || tmpA == 0x06)
+	if(tmpD == 0x45)
 	{
-		//tmpC = 0x38;
-		if(fastenSeatbelt == 0x03)
-                {
-			tmpC = 0xB8;
-                }
+		if(tmpB == 0x01)
+		{
+			tmpB = 0x02;
+		}
 		else
 		{
-			tmpC = 0x38;
+			tmpB = 0x04;
 		}
 	}
-	if(tmpA == 0x07 || tmpA == 0x08 || tmpA == 0x09)
+	else if(tmpD < 0x45)
 	{
-		//tmpC = 0x3C;
-		if(fastenSeatbelt == 0x03)
-                {
-			tmpC = 0xBC;
-                }
+		if( (tmpD + tmpB) > 0x05)
+		{
+			tmpB = 0x02;
+		}	
 		else
 		{
-			tmpC = 0x3C;
+			tmpB = 0x00;
 		}
-	}
-	if(tmpA == 0x0A || tmpA == 0x0B || tmpA == 0x0C)
-	{
-		//tmpC = 0x3E;
-		if(fastenSeatbelt == 0x03)
-                {
-			tmpC = 0xBE;
-                }
-		else
-		{
-			tmpC = 0x3E;
-		}
-	}
-	if(tmpA == 0x0D || tmpA == 0x0E || tmpA == 0x0F)
-	{
-		//tmpC = 0x1F;
-		if(fastenSeatbelt == 0x03)
-                {
-			tmpC = 0xBF;
-                }
-		else
-		{
-			tmpC = 0x3F;
-		}
-	}
-	PORTC = tmpC;
+	}	
+	PORTB = tmpB;
     }
     return 1;
 }

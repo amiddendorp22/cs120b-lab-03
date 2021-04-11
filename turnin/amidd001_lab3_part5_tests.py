@@ -30,6 +30,10 @@ tests = [ {'description': 'PINB  == 0x01, PIND == 0xF0  => PORTB == 0x02',
      'steps': [ {'inputs': [('PINB', 0x01), ('PIND', 0x00)], 'iterations': 5} ],
      'expected': [('PORTB', 0x00)],
     },
+    {'description': 'PINB: 0x00, PIND: 0x23 => PORTB: 0x02',
+     'steps': [ {'inputs': [('PINB', 0x00),('PIND', 0x23)], 'iterations': 5} ],
+     'expected': [('PORTB', 0x02)],
+   }, 
     ]
 
 # Optionally you can add a set of "watch" variables these need to be global or static and may need

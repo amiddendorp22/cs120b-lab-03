@@ -43,7 +43,7 @@ int main(void) {
 	{
 		if( (tmpD + tmpB) > 0x05)
 		{
-			tmpB = 0x04;
+			tmpB = 0x02;
 		}	
 		else
 		{
