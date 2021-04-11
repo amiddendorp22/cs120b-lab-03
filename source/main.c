@@ -14,24 +14,43 @@
 
 int main(void) {
     /* Insert DDR and PORT initializations */
-    DDRA = 0x00; PORTA = 0xFF;
-    DDRB = 0xFF; PORTB = 0x00;
-    DDRC = 0xFF; PORTC = 0x00;
+    DDRB = 0xFE; PORTB = 0xFE; //configures all but the last bit as output.
+    DDRD = 0x00; PORTD = 0xFF;
     /* Insert your solution below */
-    unsigned char tmpA;
-    unsigned char upperNibble;
-    unsigned char lowerNibble;
+    unsigned char tmpD;
+    unsigned char tmpB;
 
     while (1) {
-	tmpA = PINA;
+	tmpD = PIND;
+	tmpB = PINB;
 	
-	lowerNibble = tmpA << 4; // 11111111 => 11110000
-	upperNibble = tmpA >> 4; // 11111111 => 00001111
-
-	PORTC = lowerNibble;
-	PORTB = upperNibble;
-	
-	
+	if(tmpD >= 0x46)
+	{
+		tmpB = 0x02;
+	}
+	if(tmpD == 0x45)
+	{
+		if(tmpB == 0x01)
+		{
+			tmpB = 0x02;
+		}
+		else
+		{
+			tmpB = 0x04;
+		}
+	}
+	else if(tmpD < 0x45)
+	{
+		if( (tmpD + tmpB) > 0x05)
+		{
+			tmpB = 0x04;
+		}	
+		else
+		{
+			tmpB = 0x00;
+		}
+	}	
+	PORTB = tmpB;
     }
     return 1;
 }
