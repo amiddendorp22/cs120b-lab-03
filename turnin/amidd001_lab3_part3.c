@@ -21,7 +21,7 @@ int main(void) {
     unsigned char tmpC;
     unsigned char fastenSeatbelt;
     while (1) {
-	tmpA = PINA;
+	tmpA = PINA & 0x7F; //grabs all pins except PA7 from PINA
 	tmpA = tmpA << 4;
 	tmpA = tmpA >> 4;
 	fastenSeatbelt = PINA >> 4;
@@ -107,11 +107,11 @@ int main(void) {
 		//tmpC = 0x1F;
 		if(fastenSeatbelt == 0x03)
                 {
-			tmpC = 0x9F;
+			tmpC = 0xBF;
                 }
 		else
 		{
-			tmpC = 0x1F;
+			tmpC = 0x3F;
 		}
 	}
 	PORTC = tmpC;

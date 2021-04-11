@@ -14,9 +14,9 @@
 # An example set of tests is shown below. It is important to note that these tests are not "unit tests" in 
 # that they are not ran in isolation but in the order shown and the state of the device is not reset or 
 # altered in between executions (unless preconditions are used).
-tests = [ {'description': 'PINA  == 0x0F  => PORTC == 0x1F',
+tests = [ {'description': 'PINA  == 0x0F  => PORTC == 0x3F',
     'steps': [ {'inputs': [('PINA',0x0F)], 'iterations': 5 } ],
-    'expected': [('PORTC',0x1F)],
+    'expected': [('PORTC',0x3F)],
     },
     {'description': 'PINA == 0x00 => PORTC == 0x40',
     'steps': [ {'inputs': [('PINA', 0x00)],'iterations': 5} ], # Set PIN to val then run one iteration
@@ -30,9 +30,21 @@ tests = [ {'description': 'PINA  == 0x0F  => PORTC == 0x1F',
      'steps': [ {'inputs': [('PINA', 0x08)], 'iterations': 5 } ],
      'expected': [('PORTC', 0x3C)],
     },
-    {'description': 'PINA: 0x83 => PORTC: 0x70',
-     'steps': [ {'inputs': [('PINA', 0x83)], 'iterations': 5} ],
-     'expected': [('PORTC', 0x70)],
+    { 'description': 'PINA == 0x3A => PORTC == 0xBE',
+      'steps': [ {'inputs': [('PINA', 0x3A)], 'iterations': 5 } ],
+      'expected': [('PORTC', 0xBE)],
+    },
+    {  'description': 'PINA == 0x37 => PORTC == 0xBC',
+      'steps': [ {'inputs': [('PINA', 0x37)], 'iterations': 5 } ],
+      'expected': [('PORTC', 0xBC)],
+    },
+    {'description': 'PINA: 0x3F => PORTC: 0xBF',
+     'steps': [ {'inputs': [('PINA', 0x3F)], 'iterations': 5 } ],
+     'expected': [('PORTC', 0xBF)],
+    },
+    {'description': 'PINA: 0x7F => PORTC: 0x3F',
+     'steps': [ {'inputs': [('PINA', 0x7F)], 'iterations': 5 } ],
+     'expected': [('PORTC', 0x3F)],
     },
     ]
 
