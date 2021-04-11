@@ -20,7 +20,7 @@ int main(void) {
     unsigned char tmpA;
     unsigned char tmpC;
     while (1) {
-	tmpA = PINA;
+	tmpA = PINA & 0x0F; //grabs the last 4 pins of PINA
 	
 	if(tmpA <= 0x04)
 	{
